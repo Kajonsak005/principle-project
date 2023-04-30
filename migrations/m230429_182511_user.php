@@ -12,17 +12,12 @@ class m230429_182511_user extends Migration
      */
     public function safeUp()
     {
-         $this->createTable('users', [
-            'id' => 'UUID NOT NULL PRIMARY KEY',
-            'email' => Schema::TYPE_STRING . ' NULL',
-            'password' => Schema::TYPE_STRING . ' NOT NULL',
-            'name' => Schema::TYPE_STRING . ' NOT NULL',
-            'surname' => Schema::TYPE_STRING . ' NOT NULL',
-            'mobile_number' => Schema::TYPE_STRING . ' NULL',
-            'image_profile' => Schema::TYPE_STRING . ' NULL', 
-            'update_id' => 'UUID NULL',
-            'create_time' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
-            'update_time' => Schema::TYPE_TIMESTAMP . ' NOT NULL',
+        $this->createTable('users', [
+            'id' => $this->primaryKey(),
+            'image' => $this->string(255),
+            'username' => $this->string(255),
+            'password' => $this->string(255),
+            'money' => $this->string(255),
         ]);
 
     }

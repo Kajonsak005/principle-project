@@ -12,7 +12,13 @@ class m230429_182549_car_park extends Migration
      */
     public function safeUp()
     {
-        
+        $this->createTable('car_park', [
+            'id' => $this->primaryKey(),
+            'available' => $this->string(255),
+            'available_now' => $this->string(255),
+            'zone' => $this->string(255),
+            'status' => $this->string(255),
+        ]);
     }
 
     /**
@@ -21,7 +27,7 @@ class m230429_182549_car_park extends Migration
     public function safeDown()
     {
         echo "m230429_182549_car_park cannot be reverted.\n";
-
+        $this->dropTable('car_park');
         return false;
     }
 

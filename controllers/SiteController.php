@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Users;
 
 class SiteController extends Controller
 {
@@ -69,22 +70,24 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+    public function actionLogin() {
+        $model = new Users();
+        // $this->layout = 'auth';
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if($this->request->isPost) {
+            if($model->load($this->request->post())){
+                if($model->checkPassword()) {
+                    $login = Yii::$app->user->login(Users::find()->where(['username' => $model->username])->one(), 3600*24*30);
+                    if($login)
+                     return $this->goBack();
+                } 
+            }
         }
-
-        $model->password = '';
         return $this->render('login', [
             'model' => $model,
         ]);
     }
+
 
     /**
      * Logout action.
