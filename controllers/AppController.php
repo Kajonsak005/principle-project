@@ -11,7 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Users;
 
-class SiteController extends Controller
+class AppController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -44,6 +44,7 @@ class SiteController extends Controller
      */
     public function actions()
     {
+        $this->layout = 'app';
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -65,14 +66,8 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
     public function actionLogin() {
         $model = new Users();
-        // $this->layout = 'auth';
 
         if($this->request->isPost) {
             if($model->load($this->request->post())){
@@ -80,52 +75,12 @@ class SiteController extends Controller
                     $login = Yii::$app->user->login(Users::find()->where(['username' => $model->username])->one(), 3600*24*30);
                     if($login)
                     return $this->redirect(['app/index']);
+
                 } 
             }
         }
         return $this->render('login', [
             'model' => $model,
         ]);
-    }
-
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }
