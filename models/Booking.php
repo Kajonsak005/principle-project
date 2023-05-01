@@ -16,6 +16,10 @@ use Yii;
  */
 class Booking extends \yii\db\ActiveRecord
 {
+
+    public $paid = "paid";
+    public $wait = "wait";
+
     /**
      * {@inheritdoc}
      */

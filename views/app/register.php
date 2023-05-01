@@ -23,19 +23,18 @@ $this->title = 'Login';
         ],
     ]); ?>
 
-    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    <!-- <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?> -->
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'rememberMe')->checkbox([
-            'template' => "<div class=\"offset-lg-1 col-lg-3 custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
-        ]) ?>
+    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <div class="offset-lg-1 col-lg-11">
-            <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            <a href="<?= \yii\helpers\Url::to(['/app/register']) ?>" class="btn btn-success">Register</a>
-
+            <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+            <a href="<?= \yii\helpers\Url::to(['/app/login']) ?>" class="btn btn-success">Back Login Page</a>
         </div>
     </div>
 

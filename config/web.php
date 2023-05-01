@@ -7,6 +7,8 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'timeZone' => 'Asia/Bangkok',
+    'defaultRoute' => 'app/login',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -22,6 +24,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\Users',
             'enableAutoLogin' => true,
+            'loginUrl' => ['app/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -42,12 +45,13 @@ $config = [
             ],
         ],
         'db' => $db,
-        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            // 'rules' => [
+            //     '' => 'app/login',
+            // ],
         ],
-        
     ],
     'params' => $params,
 ];

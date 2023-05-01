@@ -17,6 +17,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     public $authKey;
     public $rememberMe;
+    public $confirm_password;
     /**
      * {@inheritdoc}
      */
@@ -31,7 +32,8 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['image', 'username', 'password', 'money'], 'string', 'max' => 255],
+            [['image', 'username', 'password', 'money','confirm_password'], 'string', 'max' => 255],
+            [['username'],'unique'],
             ['rememberMe','boolean']
         ];
     }
@@ -46,15 +48,23 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'image' => 'Image',
             'username' => 'Username',
             'password' => 'Password',
-            'rememberMe' => 'Remember Me',
             'money' => 'Money',
+            'rememberMe' => 'Remember Me',
+            'confirm_password' => 'Confirm password'
         ];
     }
 
-        function hashPassword() {
+
+    function ConfirmPass() {
+        return $this->confirm_password == $this->password;
+    }
+
+
+    function hashPassword() {
         $this->password = password_hash($this->password,PASSWORD_DEFAULT);
     }
 
+    
     function checkPassword() {
         $model = Users::find()->where(['username' => $this->username])->one();
         if(!$model) {
@@ -76,7 +86,9 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
     public static function findIdentity($id)
     {
-        return static::findOne($id);
+        $model = static::findOne($id);
+        $model->rememberMe = false;
+        return $model;
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
@@ -87,6 +99,11 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getMoney()
+    {
+        return $this->money;
     }
 
     public function getAuthKey()
