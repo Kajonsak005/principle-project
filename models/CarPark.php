@@ -52,4 +52,7 @@ class CarPark extends \yii\db\ActiveRecord
         $this->save();
     }
 
+    function Increment(){
+         $this->available_now = strval(intval($this->available_now)+1);
+    }
 }

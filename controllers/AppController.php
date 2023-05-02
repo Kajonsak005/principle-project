@@ -41,8 +41,10 @@ class AppController extends Controller
                     ],
                 ],
                 'denyCallback' => function ($rule, $action) {
-                    if(($action->id == "login")||($action->id == "register"))
+                    if(($action->id == "login")||($action->id == "register")){
                         return Yii::$app->response->redirect(['app/index']);
+                    }
+                    return Yii::$app->response->redirect(['app/login']);
                 },
             ],
             'verbs' => [
