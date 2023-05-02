@@ -12,7 +12,6 @@ $this->title = 'My Yii Application';
         <div class="d-flex justify-content-between">
             <div>
                 <img src="/icon/profile.svg" alt="">
-                <h4>ชื่อ <?= Yii::$app->user->identity->username ?></h4>
             </div>
             <div class="text-right">
                 <h4>เงินในระบบ: <?= number_format((Yii::$app->user->identity->money)) ?></h4>
@@ -44,6 +43,10 @@ $this->title = 'My Yii Application';
                 ?>
             </div>
         </div>
+        <h4
+            style="color:rgba(32, 82, 149, 1);white-space: nowrap;overflow: hidden;text-ellipsis: string;content: ' ...';">
+            ชื่อ
+            <?= Yii::$app->user->identity->username ?></h4>
         <div class="text-center mt-5">
             <a href="<?= \yii\helpers\Url::to(['/app/car-park']) ?>" class="btn btn-success">จอง ที่จอดรถ</a>
         </div>

@@ -10,6 +10,9 @@ $this->title = 'Login';
 
     <div class="text-center">
         <img src="/icon/logo.svg" alt="" />
+        <br />
+        <br />
+        <h1>Register</h1>
     </div>
 
     <?php $form = ActiveForm::begin([
@@ -23,7 +26,6 @@ $this->title = 'Login';
         ],
     ]); ?>
 
-    <!-- <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?> -->
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
@@ -31,6 +33,7 @@ $this->title = 'Login';
 
     <?= $form->field($model, 'confirm_password')->passwordInput(['maxlength' => true]) ?>
 
+    <br />
     <div class="form-group">
         <div class="offset-lg-1 col-lg-11">
             <?= Html::submitButton('Register', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>

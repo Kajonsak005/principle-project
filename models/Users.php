@@ -33,6 +33,7 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['image', 'username', 'password', 'money','confirm_password'], 'string', 'max' => 255],
+            [['username', 'password'],'required'],
             [['username'],'unique'],
             ['rememberMe','boolean']
         ];
@@ -68,26 +69,33 @@ class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     function checkPassword() {
         $model = Users::find()->where(['username' => $this->username])->one();
         if(!$model) {
+            $this->addError('username', 'username and password not match');
+            $this->addError('password', 'username and password not match');
+            $this->username = '';
+            $this->password = '';
             return false;
         }
 
         if(password_verify($this->password,$model->password)) {
             return true;
         } 
+        $this->addError('username', 'username and password not match');
+        $this->addError('password', 'username and password not match');
+        $this->username = '';
+        $this->password = '';
         return false;
     }
 
     // login interface session
 
-    public static function login()
+    function login()
     {
-        return $login = Yii::$app->user->login(Users::find()->where(['username' => $model->username])->one(), $this->rememberMe ? 3600*24*30 : 0);
+        return $login = Yii::$app->user->login(Users::find()->where(['username' => $this->username])->one(), $this->rememberMe ? 3600*24*30 : 0);
     }
 
     public static function findIdentity($id)
     {
         $model = static::findOne($id);
-        $model->rememberMe = false;
         return $model;
     }
 

@@ -91,3 +91,7 @@ a.desc:after {
 .text-left {
   text-align: left;
 }
+
+h1 {
+  color: rgba(32, 82, 149, 1);
+}

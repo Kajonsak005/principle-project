@@ -17,8 +17,6 @@ use app\models\Booking;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
 
-
-
 class AppController extends Controller
 {
     /**
@@ -80,6 +78,7 @@ class AppController extends Controller
      */
     public function actionIndex()
     {
+
         $model = new Users();
         if($this->request->isPost) {
             if($model->load($this->request->post())){
@@ -101,8 +100,7 @@ class AppController extends Controller
         if($this->request->isPost) {
             if($model->load($this->request->post())){
                 if($model->checkPassword()) {
-                    $login = Yii::$app->user->login(Users::find()->where(['username' => $model->username])->one(), 3600*24*30);
-                    if($login)
+                    if($model->login())
                     return $this->redirect(['app/index']);
                 } 
             }
@@ -148,7 +146,7 @@ class AppController extends Controller
             return $this->redirect(['success','id' => strval($booking->id)]);
         }
 
-        $model = CarPark::find()->all();
+        $model = CarPark::find()->orderBy(['zone' => SORT_ASC])->all();
 
         $parkAll= [
             "available" => 0,

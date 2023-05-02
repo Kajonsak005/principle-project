@@ -46,4 +46,10 @@ class CarPark extends \yii\db\ActiveRecord
             'status' => 'Status',
         ];
     }
+
+    function Decrement(){
+        $this->available_now = strval(intval($this->available_now)-1);
+        $this->save();
+    }
+
 }

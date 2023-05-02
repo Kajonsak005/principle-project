@@ -53,4 +53,16 @@ class Booking extends \yii\db\ActiveRecord
             'exit_time' => 'Exit Time',
         ];
     }
+
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            $model = CarPark::findOne($this->car_park_id);
+            $model->decrement();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
